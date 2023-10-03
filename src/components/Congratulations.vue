@@ -1,0 +1,305 @@
+<template>
+    <div class="contain">
+        <div class="congrats">
+            <h1 id="congratulationsText"></h1>
+            <br />
+            <div class="done">
+                <svg version="1.1" id="tick" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 37 37"
+                    style="enable-background: new 0 0 37 37" xml:space="preserve">
+                    <path class="circ path" style="
+              fill: #0cdcc7;
+              stroke: #07a796;
+              stroke-width: 3;
+              stroke-linejoin: round;
+              stroke-miterlimit: 10;
+            " d="
+        M30.5,6.5L30.5,6.5c6.6,6.6,6.6,17.4,0,24l0,0c-6.6,6.6-17.4,6.6-24,0l0,0c-6.6-6.6-6.6-17.4,0-24l0,0C13.1-0.2,23.9-0.2,30.5,6.5z" />
+                    <polyline class="tick path" style="
+              fill: none;
+              stroke: #fff;
+              stroke-width: 3;
+              stroke-linejoin: round;
+              stroke-miterlimit: 10;
+            " points="
+        11.6,20 15.9,24.2 26.4,13.8 " />
+                </svg>
+            </div>
+
+            <h4 id="youUploadedText"></h4>
+            <audio controls id="player">
+                <source id="status" src="" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+        <div class="loader-wrapper">
+            <span class="loader"><span class="loader-inner"></span></span>
+        </div>
+    </div>
+</template>
+
+<script>
+    import $ from "jquery";
+    export default {
+        name: "HelloWorld",
+        props: {
+            msg: String,
+        },
+
+        methods: {},
+        created() {
+            $(window).on("load", function () {
+                setTimeout(function () {
+                    // $(".done").addClass("drawn");
+                }, 500);
+                $('#player').hide();
+                $(".loader-wrapper").fadeOut(10000, function () {
+                    var pathname = window.location.pathname;
+                    let getFileName = pathname.match(/[^/]+$/g);
+                    $('#status').attr("src", 'https://storage.googleapis.com/studentimages/' + getFileName);
+                    var audio = $("#player");
+
+                    $(".done").addClass("drawn");
+                    $("#congratulationsText").text("Congratulations!");
+                    $("#youUploadedText").text("You uploaded your audio file.");
+                    $('#player').show();
+                    audio[0].load();
+                });
+            });
+        },
+        data() {
+            return {
+                url: "https://storage.googleapis.com/studentimages/Wham!-LastChristmas-SLOWEASYPianoTutorialbyPlutax.mp3"
+            };
+        },
+    };
+</script>
+
+<style scoped>
+    .loader-wrapper {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #242f3f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        border: 4px solid #fff;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /* bring your own prefixes */
+        transform: translate(-50%, -50%);
+        animation: loader 2s infinite ease;
+    }
+
+    .loader-inner {
+        vertical-align: top;
+        display: inline-block;
+        width: 100%;
+        background-color: #fff;
+        animation: loader-inner 2s infinite ease-in;
+    }
+
+    @keyframes loader {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(180deg);
+        }
+
+        50% {
+            transform: rotate(180deg);
+        }
+
+        75% {
+            transform: rotate(360deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes loader-inner {
+        0% {
+            height: 0%;
+        }
+
+        25% {
+            height: 0%;
+        }
+
+        50% {
+            height: 100%;
+        }
+
+        75% {
+            height: 100%;
+        }
+
+        100% {
+            height: 0%;
+        }
+    }
+
+    body {
+        width: 100%;
+        height: 100%;
+    }
+
+    .contain {
+        position: absolute;
+        top: 20;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, #189086, #2f8198);
+        background-image: linear-gradient(to bottom right, #02b3e4, #02ccba);
+    }
+
+    .done {
+        width: 100px;
+        height: 100px;
+        position: relative;
+        left: 0;
+        right: 0;
+        top: -20px;
+        margin: auto;
+    }
+
+    .contain h1 {
+        font-family: "Julius Sans One", sans-serif;
+        font-size: 1.4em;
+        color: #02b3e4;
+    }
+
+    .congrats {
+        position: relative;
+        left: 50%;
+        top: 50%;
+        max-width: 800px;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        min-height: 300px;
+        max-height: 900px;
+        border: 2px solid white;
+        border-radius: 5px;
+        box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.3);
+        background-image: linear-gradient(to bottom right, #02b3e4, #02ccba);
+        background: #fff;
+        text-align: center;
+        font-size: 2em;
+        color: #189086;
+    }
+
+    .text {
+        position: relative;
+        font-weight: normal;
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: 80%;
+        max-width: 800px;
+
+        font-family: "Lato", sans-serif;
+        font-size: 0.6em;
+    }
+
+    .circ {
+        opacity: 0;
+        stroke-dasharray: 130;
+        stroke-dashoffset: 130;
+        -webkit-transition: all 1s;
+        -moz-transition: all 1s;
+        -ms-transition: all 1s;
+        -o-transition: all 1s;
+        transition: all 1s;
+    }
+
+    .tick {
+        stroke-dasharray: 50;
+        stroke-dashoffset: 50;
+        -webkit-transition: stroke-dashoffset 1s 0.5s ease-out;
+        -moz-transition: stroke-dashoffset 1s 0.5s ease-out;
+        -ms-transition: stroke-dashoffset 1s 0.5s ease-out;
+        -o-transition: stroke-dashoffset 1s 0.5s ease-out;
+        transition: stroke-dashoffset 1s 0.5s ease-out;
+    }
+
+    .drawn svg .path {
+        opacity: 1;
+        stroke-dashoffset: 0;
+    }
+
+    .regards {
+        font-size: 0.7em;
+    }
+
+    @media (max-width: 600px) {
+        .congrats h1 {
+            font-size: 1.2em;
+        }
+
+        .done {
+            top: -10px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .text {
+            font-size: 0.5em;
+        }
+
+        .regards {
+            font-size: 0.6em;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .congrats h1 {
+            font-size: 1em;
+        }
+
+        .done {
+            top: -10px;
+            width: 70px;
+            height: 70px;
+        }
+    }
+
+    @media (max-width: 410px) {
+        .congrats h1 {
+            font-size: 1em;
+        }
+
+        .congrats .hide {
+            display: none;
+        }
+
+        .congrats {
+            width: 100%;
+        }
+
+        .done {
+            top: -10px;
+            width: 50px;
+            height: 50px;
+        }
+
+        .regards {
+            font-size: 0.55em;
+        }
+    }
+</style>
